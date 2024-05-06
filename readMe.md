@@ -4,12 +4,12 @@ créer une application Java qui interagit avec une table HBase pour effectuer de
 1-  Créer la table students avec les familles de colonnes suivantes :
 - info : pour stocker les informations personnelles des étudiants.
 - grades : pour stocker les notes des étudiants.
-2- Ajoutez les deux étudiants suivants :
-3- Récupérez et affichez  toutes les informations disponibles pour "student1".
-4- Changez l'âge de "Jane Smith" à "23" et mettez à jour sa note de math à "A+".
-5- Supprimez l'étudiant avec la Row Key "student1" de la table Students.
-6- Affichez toutes les informations pour tous les étudiants.
-## Creating the table :
+2- Ajouter un étudiant :
+3- Récupérer et affichez  toutes les informations disponibles pour "student1".
+4- Changer l'âge d'un étudiant
+5- Supprimer l'étudiant avec la Row Key "student1" de la table Students.
+6- supprimer la table
+## Créer la  table :
 
 ````java
 Connection connection = ConnectionFactory.createConnection(configuration);
@@ -31,7 +31,7 @@ if (!admin.tableExists(tableName)) {
 }
 ````
 
-## Inserting data :
+## Insérer un étudiant :
 ````java
 Table table = connection.getTable(tableName);
 Put put = new Put(Bytes.toBytes("1"));
@@ -42,7 +42,7 @@ table.put(put);
 System.out.println("Added !");
 ````
 
-## Reading data :
+## Récuperer un étudiant :
 ````java
 public static void display(Result result) {
     for(Cell cell: result.rawCells()) {
@@ -66,7 +66,7 @@ Result result = table.get(get);
 display(result);
 ````
 
-## Updating data :
+## changer l'age d'un étudiant:
 ````java
 put = new Put(Bytes.toBytes("1"));
 put.addColumn(Bytes.toBytes(CF_PERSONAL_DATA), Bytes.toBytes("name"), Bytes.toBytes("Maryam"));
@@ -82,7 +82,7 @@ result = table.get(get);
 display(result);
 ````
 
-## Deleting data :
+## supprimer étudiant:
 ````java
 Delete delete = new Delete(Bytes.toBytes("1"));
 table.delete(delete);
@@ -90,7 +90,7 @@ table.delete(delete);
 System.out.println("The record has been deleted !");
 ````
 
-## Deleting the table :
+## Supprimer la table :
 ````java
 admin.disableTable(tableName);
 admin.deleteTable(tableName);
